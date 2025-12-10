@@ -29,3 +29,8 @@ Thumbs.db
 
 # Application
 application-local.properties
+
+# Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
