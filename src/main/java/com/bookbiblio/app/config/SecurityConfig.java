@@ -40,6 +40,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // CSRF protection is disabled for JWT-based authentication
+                // JWT tokens are immune to CSRF attacks because they are not automatically
+                // sent by browsers (unlike cookies). Tokens must be explicitly included in headers.
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth

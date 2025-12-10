@@ -32,6 +32,15 @@ public class BookService {
     public Book updateBook(Long id, Book bookDetails) {
         Book book = getBookById(id);
         
+        // Check if ISBN is being changed and if the new ISBN already exists
+        if (!book.getIsbn().equals(bookDetails.getIsbn())) {
+            bookRepository.findByIsbn(bookDetails.getIsbn()).ifPresent(existingBook -> {
+                if (!existingBook.getId().equals(id)) {
+                    throw new RuntimeException("Book with ISBN " + bookDetails.getIsbn() + " already exists");
+                }
+            });
+        }
+        
         book.setTitle(bookDetails.getTitle());
         book.setAuthor(bookDetails.getAuthor());
         book.setIsbn(bookDetails.getIsbn());
